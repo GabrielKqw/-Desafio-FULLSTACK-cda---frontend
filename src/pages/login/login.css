@@ -1,0 +1,146 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Body Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #1c1c1c, #343434); /* Fundo com gradiente */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Main Container */
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Section */
+.login-section {
+  background-color: rgba(0, 0, 0, 0.7); /* Adiciona um overlay escuro */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 400px; /* Limitando a largura máxima */
+  position: relative;
+  overflow: visible; /* Permitir overflow visível */
+  padding-top: 120px; /* Espaço para a logo */
+}
+
+/* Login Content */
+.login-content {
+  text-align: center;
+  transition: all 0.3s ease-in-out; /* Transição suave */
+}
+
+/* Logo Styles */
+.login-section::before {
+  content: "";
+  background: url('../../assets/img/logo.png') no-repeat center top;
+  background-size: contain;
+  position: absolute;
+  top: -60px; /* Ajuste conforme necessário */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px; /* Largura da logo */
+  height: 120px; /* Altura da logo */
+  animation: bounce 2s infinite; /* Animação da logo */
+}
+
+/* Animação da Logo */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-30px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+}
+
+/* Form Container */
+.form-container {
+  padding: 20px; /* Adiciona espaçamento interno */
+}
+
+/* Input Styles */
+input[type='text'],
+input[type='password'] {
+  width: calc(100% - 20px); /* Ajusta a largura para considerar o padding */
+  padding: 10px;
+  margin: 10px 0; /* Maior margem entre inputs */
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1); /* Altera a cor de fundo dos inputs */
+  color: #fff;
+  border-radius: 5px;
+  border-bottom: 2px solid #555; /* Adiciona uma borda inferior */
+  outline: none; /* Remove a borda ao focar */
+  transition: all 0.3s ease; /* Adiciona uma transição suave */
+}
+
+/* Input Focus */
+input[type='text']:focus,
+input[type='password']:focus {
+  border-bottom-color: #ffcc00; /* Altera a cor da borda inferior ao focar */
+  background-color: rgba(255, 255, 255, 0.2); /* Muda o fundo ao focar */
+}
+
+/* Button Styles */
+button[type='submit'] {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0; /* Maior margem para os botões */
+  border: none;
+  background-color: #ffcc00; /* Cor amarela */
+  color: #1c1c1c; /* Cor do texto */
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Adiciona uma transição suave */
+}
+
+/* Button Hover Effect */
+button[type='submit']:hover {
+  background-color: #ffdd33; /* Altera a cor ao passar o mouse */
+}
+
+/* Link Styles */
+a {
+  color: #ffcc00; /* Cor amarela */
+  text-decoration: none;
+}
+
+/* Link Hover Effect */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Login Description */
+.login-description {
+  color: #fff;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .login-section {
+    width: 100%;
+    padding: 10px;
+    padding-top: 100px; /* Espaço para a logo em dispositivos móveis */
+  }
+
+  .login-section::before {
+    width: 100px; /* Ajuste da largura da logo */
+    height: 100px; /* Ajuste da altura da logo */
+  }
+}
