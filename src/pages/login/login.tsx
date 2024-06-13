@@ -1,12 +1,9 @@
-/** @format */
-import "./login.css";
-
-import { Link, useNavigate } from "react-router-dom";
-
-import { UserLogin } from "../../services/interfaces";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { loginService } from "../../services/authService";
 import swal from "sweetalert";
+import styles from "./login.module.css";
+
 
 const Login = () => {
   const navigation = useNavigate();
@@ -17,7 +14,7 @@ const Login = () => {
   });
 
   const handleChangesValues = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues((values: UserLogin) => ({
+    setValues((values) => ({
       ...values,
       [e.target.name]: e.target.value,
     }));
@@ -53,10 +50,10 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
+    <div className={styles.login}>
       <main>
-        <section className="login-section">
-          <form className="login-content" onSubmit={handleLogin}>
+        <section className={styles["login-section"]}>
+          <form className={styles["login-content"]} onSubmit={handleLogin}>
             <input
               type='text'
               name='email'
@@ -75,7 +72,7 @@ const Login = () => {
               onChange={handleChangesValues}
             />
 
-            <p className="login-description">
+            <p className={styles["login-description"]}>
               You don't have an account created{" "}
               <strong>
                 <Link to={"/singup"}>Create one here!</Link>
