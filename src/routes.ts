@@ -1,8 +1,7 @@
 /** @format */
 
 export enum RoutesPath {
-  HOME = "/",
-  LOGIN = "/login",
+  LOGIN = "/",
   REGISTER = "/singup",
-  DASHBOARD = "/dashboard"
+  DASHBOARD = "/dashboard",
 }

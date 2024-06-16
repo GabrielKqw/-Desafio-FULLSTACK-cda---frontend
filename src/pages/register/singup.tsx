@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
 import swal from "sweetalert";
 import { RoutesPath } from "../../routes";
+import './singup.css'
 
 const SingUp = () => {
   const navigate = useNavigate();
@@ -65,7 +66,6 @@ const SingUp = () => {
       {/* <ReturnPage Route={() => navigate(-1)} /> */}
 
       <section className="singup-section">
-        <h2 className="singup-h2">User registration</h2>
 
         <form
           action="submit"
