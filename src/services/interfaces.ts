@@ -7,12 +7,13 @@ export interface UserLogin {
 
 export interface RegisterUser {
   name: string;
-  nickname: "";
+  nickname: string;
   email: string;
   password: string;
   confirmPassword: string;
   cpf: string;
-  profileImage?: string;
+  profileImage: string;
+  isAdmin: boolean;
 }
 
 export interface UserType {
@@ -22,5 +23,5 @@ export interface UserType {
   confirmPassword: string;
   cpf: string;
   isAdmin?: boolean;
-  profileImage?: string;
+  profileImage: string;
 }

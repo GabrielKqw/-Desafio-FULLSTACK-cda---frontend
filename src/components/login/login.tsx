@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginService } from "../../services/authService";
+import { authService } from "../../services/authService";
 import swal from "sweetalert";
 import styled, { createGlobalStyle } from "styled-components";
 import logoImg from "../../assets/img/logo.png";
@@ -136,8 +136,8 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const response: any = await loginService.Login(values);
+    const service = new authService();
+    const response: any = await service.login(values);
 
     if (!response) {
       swal({

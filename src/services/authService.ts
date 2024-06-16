@@ -4,11 +4,12 @@ import Api from "./api";
 import swal from "sweetalert";
 import { UserLogin, RegisterUser } from "./interfaces";
 
-export const loginService = {
-  Login: async (values: UserLogin) => {
+class authService {
+  async login(values: UserLogin) {
+    const endpoint = "/auth";
     try {
-      const res = await Api.post("/auth", values);
-      return res;
+      const response = await Api.post(endpoint, values);
+      return response;
     } catch (error: any) {
       swal({
         title: "Error",
@@ -17,14 +18,12 @@ export const loginService = {
         timer: 6000,
       });
     }
-  },
-};
-
-export const RegisterService = {
-  Register: async (values: RegisterUser) => {
+  }
+  async register(values: RegisterUser) {
+    const endpoint = "/user";
     try {
-      const res = await Api.post("/user", values);
-      return res;
+      const response = await Api.post(endpoint, values);
+      return response;
     } catch (error: any) {
       swal({
         title: "Error",
@@ -33,5 +32,21 @@ export const RegisterService = {
         timer: 6000,
       });
     }
-  },
-};
+  }
+}
+export {authService}
+// export const RegisterService = {
+//   Register: async (values: RegisterUser) => {
+//     try {
+//       const res = await Api.post("/user", values);
+//       return res;
+//     } catch (error: any) {
+//       swal({
+//         title: "Error",
+//         text: `${error.message}`,
+//         icon: "error",
+//         timer: 6000,
+//       });
+//     }
+//   },
+// };

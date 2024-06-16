@@ -17,7 +17,8 @@ const Dashboard: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile>();
   const [formData, setFormData] = useState<UserProfile>();
   const [isEditing, setIsEditing] = useState(false);
-  const [showReceiveAchievementButton, setShowReceiveAchievementButton] = useState(true);
+  const [showReceiveAchievementButton, setShowReceiveAchievementButton] =
+    useState(true);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -35,7 +36,7 @@ const Dashboard: React.FC = () => {
 
         setUserProfile({ name, nickname, rank, profileImage });
         setFormData({ name, nickname, rank, profileImage });
-        if (rank === 'GOLD') {
+        if (rank === "GOLD") {
           setShowReceiveAchievementButton(false);
         }
       } catch (error) {
@@ -45,11 +46,11 @@ const Dashboard: React.FC = () => {
     };
 
     fetchUserProfile();
-  }, [navigate]);
+  }, []);
 
   const handleEditProfile = () => {
     setIsEditing(true);
-    setShowReceiveAchievementButton(false); // Desativar o botão ao editar
+    setShowReceiveAchievementButton(false);
   };
 
   const handleReceiveAchievement = async () => {
@@ -65,12 +66,16 @@ const Dashboard: React.FC = () => {
       const response = await Api.get(`/user/${userId}`);
       const { rank } = response.data;
 
-      if (rank === 'BRONZE') {
-        await Api.patch(`/user/${userId}`, { rank: 'PRATA' });
-        setUserProfile(prevState => prevState ? { ...prevState, rank: 'PRATA' } : undefined);
-      } else if (rank === 'PRATA') {
-        await Api.patch(`/user/${userId}`, { rank: 'GOLD' });
-        setUserProfile(prevState => prevState ? { ...prevState, rank: 'GOLD' } : undefined);
+      if (rank === "BRONZE") {
+        await Api.patch(`/user/${userId}`, { rank: "PRATA" });
+        setUserProfile((prevState) =>
+          prevState ? { ...prevState, rank: "PRATA" } : undefined
+        );
+      } else if (rank === "PRATA") {
+        await Api.patch(`/user/${userId}`, { rank: "GOLD" });
+        setUserProfile((prevState) =>
+          prevState ? { ...prevState, rank: "GOLD" } : undefined
+        );
         setShowReceiveAchievementButton(false);
       }
 
@@ -94,14 +99,21 @@ const Dashboard: React.FC = () => {
       }
 
       const updatedData = {
-        name: formData?.name || '',
-        nickname: formData?.nickname || '',
-        profileImage: formData?.profileImage || '',
+        name: formData?.name || "",
+        nickname: formData?.nickname || "",
+        profileImage: formData?.profileImage || "",
       };
 
       await Api.patch(`/user/${userId}`, updatedData);
+      console.log("upddate ->", updatedData);
+      setUserProfile({
+  rank:userProfile?.rank,
 
-      setUserProfile(updatedData as UserProfile);
+        name: updatedData.name as string,
+        nickname: updatedData.nickname as string,
+        profileImage: updatedData.profileImage as string,
+      } as UserProfile
+    );
       setIsEditing(false);
       alert("Perfil atualizado com sucesso!");
     } catch (error) {
@@ -127,9 +139,15 @@ const Dashboard: React.FC = () => {
                   <p>Nickname: {userProfile.nickname}</p>
                   <p>Rank: {userProfile.rank}</p>
                   {userProfile.profileImage && (
-                    <img src={userProfile.profileImage} alt="Imagem de Perfil" />
+                    <img
+                      src={userProfile.profileImage}
+                      alt="Imagem de Perfil"
+                    />
                   )}
-                  <button className="responsive-button" onClick={handleEditProfile}>
+                  <button
+                    className="responsive-button"
+                    onClick={handleEditProfile}
+                  >
                     Editar Perfil
                   </button>
                 </>
@@ -140,9 +158,13 @@ const Dashboard: React.FC = () => {
                     <input
                       className="responsive-input"
                       type="text"
-                      value={formData?.name || ''}
+                      value={formData?.name || ""}
                       onChange={(e) =>
-                        setFormData(prevState => prevState ? { ...prevState, name: e.target.value } : undefined)
+                        setFormData((prevState) =>
+                          prevState
+                            ? { ...prevState, name: e.target.value }
+                            : undefined
+                        )
                       }
                       required
                     />
@@ -153,9 +175,13 @@ const Dashboard: React.FC = () => {
                     <input
                       className="responsive-input"
                       type="text"
-                      value={formData?.nickname || ''}
+                      value={formData?.nickname || ""}
                       onChange={(e) =>
-                        setFormData(prevState => prevState ? { ...prevState, nickname: e.target.value } : undefined)
+                        setFormData((prevState) =>
+                          prevState
+                            ? { ...prevState, nickname: e.target.value }
+                            : undefined
+                        )
                       }
                       required
                     />
@@ -166,9 +192,13 @@ const Dashboard: React.FC = () => {
                     <input
                       className="responsive-input"
                       type="text"
-                      value={formData?.profileImage || ''}
+                      value={formData?.profileImage || ""}
                       onChange={(e) =>
-                        setFormData(prevState => prevState ? { ...prevState, profileImage: e.target.value } : undefined)
+                        setFormData((prevState) =>
+                          prevState
+                            ? { ...prevState, profileImage: e.target.value }
+                            : undefined
+                        )
                       }
                     />
                   </label>

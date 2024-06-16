@@ -1,35 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { RegisterUser } from "../../services/interfaces";
-import { RegisterService } from "../../services/authService";
+import { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/authService";
 import swal from "sweetalert";
+import { RoutesPath } from "../../routes";
 
 const SingUp = () => {
   const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate('/login')
-  }
 
-  const [values, setValues] = useState<RegisterUser>({
-    name: "",
-    nickname: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    cpf: "",
-  });
-
-  const handleChangesValues = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues((values: RegisterUser) => ({
-      ...values,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleRegisterUser = async (e: React.SyntheticEvent) => {
+  const handleRegisterUser = async (e: FormEvent) => {
     e.preventDefault();
-
-    const response: any = await RegisterService.Register(values);
+    const formData = new FormData(e.target as HTMLFormElement);
+    const { name, nickname, email, cpf, password, confirmPassword } =
+      Object.fromEntries(formData);
+    const service = new authService();
+    const response = await service.register({
+      name: name as string,
+      nickname: nickname as string,
+      email: email as string,
+      cpf: cpf as string,
+      password: password as string,
+      confirmPassword: confirmPassword as string,
+      profileImage: "",
+      isAdmin: false,
+    });
 
     if (!response) {
       swal({
@@ -40,25 +33,31 @@ const SingUp = () => {
       });
     }
 
-    const jwt = response.data.token;
+    const login = await service.login({
+      email: email as string,
+      password: password as string,
+    });
+    console.log("login ->", login);
+    const jwt = login?.data.token;
 
     if (!jwt) {
       swal({
         title: "Error!",
-        text: `${response.data.message}`,
+        text: `${login?.data.message}`,
         icon: "error",
         timer: 6000,
       });
     }
 
     localStorage.setItem("jwt", jwt);
+    localStorage.setItem("userId", login?.data.user.id);
     swal({
       title: "Usuário cadastrado com sucesso!",
       icon: "success",
       timer: 6000,
     });
 
-    navigate("/login");
+    navigate(RoutesPath.DASHBOARD);
   };
 
   return (
@@ -68,60 +67,58 @@ const SingUp = () => {
       <section className="singup-section">
         <h2 className="singup-h2">User registration</h2>
 
-        <form className="singup-form" onSubmit={handleRegisterUser}>
+        <form
+          action="submit"
+          onSubmit={handleRegisterUser}
+          className="singup-form"
+        >
           <input
-            type='text'
-            name='name'
-            id='name'
-            placeholder='Enter your Name'
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your Name"
             required
-            onChange={handleChangesValues}
           />
           <input
-            type='text'
-            name='nickname'
-            id='nickname'
-            placeholder=' your nickname'
+            type="text"
+            name="nickname"
+            id="nickname"
+            placeholder=" your nickname"
             required
-            onChange={handleChangesValues}
           />
           <input
-            type='email'
-            name='email'
-            id='email'
-            placeholder=' Enter your Email'
+            type="email"
+            name="email"
+            id="email"
+            placeholder=" Enter your Email"
             required
-            onChange={handleChangesValues}
-          />
-
-          <input
-            type='text'
-            name='cpf'
-            id='cpf'
-            placeholder=' Put your CPF'
-            required
-            onChange={handleChangesValues}
           />
 
           <input
-            type='password'
-            name='password'
-            id='password'
-            placeholder=' Enter a password'
+            type="text"
+            name="cpf"
+            id="cpf"
+            placeholder=" Put your CPF"
             required
-            onChange={handleChangesValues}
           />
 
           <input
-            type='password'
-            name='confirmPassword'
-            id='confirmPassword'
-            placeholder=' Confirm your password'
+            type="password"
+            name="password"
+            id="password"
+            placeholder=" Enter a password"
             required
-            onChange={handleChangesValues}
           />
 
-          <button type='submit'>Register</button>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder=" Confirm your password"
+            required
+          />
+
+          <button type="submit">Register</button>
         </form>
       </section>
     </div>
